@@ -1,0 +1,6 @@
+eProsecutionGrpcServer/obj/
+eProsecutionGrpcServer/bin/
+eProsecutionGrpcServer/Migrations/
+
+eProsecutionGrpcClient/obj/
+eProsecutionGrpcClient/bin/

@@ -1,0 +1,29 @@
+syntax = "proto3";
+option csharp_namespace = "eProsecutionGrpcClient";
+
+package customer;
+
+service CustomerGrpc {
+ 
+  rpc GetCustomer (Empty) returns (GetCustomerReply);
+  rpc GetCustomerById (GetCustomerByIdReq) returns (GetCustomerByIdReply);
+}
+
+message Customer{
+int64 id = 1;
+string name =2;
+}
+
+message GetCustomerReply {
+  repeated Customer customer = 1;
+}
+
+message GetCustomerByIdReq {
+  int64 id = 1;
+}
+message GetCustomerByIdReply {
+  Customer customer = 1;
+}
+message Empty{
+}
+
