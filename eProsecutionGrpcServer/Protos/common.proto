@@ -1,0 +1,9 @@
+syntax = "proto3";
+option csharp_namespace = "eProsecutionGrpc";
+
+message ExceptionReply{
+string Code = 1;
+string Message = 2;
+}
+message Empty{
+}

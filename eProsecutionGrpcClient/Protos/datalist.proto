@@ -1,0 +1,51 @@
+syntax = "proto3";
+import "Protos/common.proto";
+option csharp_namespace = "eProsecutionGrpc";
+package datalist;
+
+service DatalistGrpc {
+  rpc GetLocation(Empty)returns(GetLocationReply);
+  rpc GetSeizedDocument(Empty)returns(GetSeizedDocumentReply);
+  rpc GetBrtaOffice(Empty)returns(GetBrtaOfficeReply);
+  rpc GetProsecutionCode(GetProsecutionCodeReq)returns(GetProsecutionCodeReply);
+}
+message Location{
+	string id = 1;
+	string locationName =2;
+}
+message GetLocationReply{
+	repeated Location location = 1;
+	optional ExceptionReply exceptionReply = 2;
+
+}
+message SeizedDocument{
+	string id=1;
+	string shortname=2;
+}
+message GetSeizedDocumentReply{
+	repeated SeizedDocument seizedDocument=1;
+	optional ExceptionReply exceptionReply = 2;
+}
+message BrtaOffice{
+	string id = 1;
+	string code =2;
+}
+message GetBrtaOfficeReply{
+	repeated BrtaOffice brtaOffice=1;
+	optional ExceptionReply exceptionReply = 2;
+}
+message ProsecutionCode{
+	string id=1;
+	string code=2;
+}
+message GetProsecutionCodeReq{
+	string userid=1;
+}
+message GetProsecutionCodeReply{
+	repeated ProsecutionCode prosecutionCode=1;
+	optional ExceptionReply exceptionReply = 2;
+}
+
+
+
+

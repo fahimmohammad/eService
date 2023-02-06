@@ -1,4 +1,6 @@
 syntax = "proto3";
+import "Protos/common.proto";
+
 option csharp_namespace = "eProsecutionGrpcServer";
 
 package customer;
@@ -23,7 +25,4 @@ message GetCustomerByIdReq {
 }
 message GetCustomerByIdReply {
   Customer customer = 1;
-}
-
-message Empty{
 }

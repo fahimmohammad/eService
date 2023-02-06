@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eProsecutionGrpcServer", "eProsecutionGrpcServer\eProsecutionGrpcServer.csproj", "{56A96203-7A15-4F00-9256-6FB85D2484C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eProsecutionGrpcServer", "eProsecutionGrpcServer\eProsecutionGrpcServer.csproj", "{56A96203-7A15-4F00-9256-6FB85D2484C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eProsecutionGrpcClient", "eProsecutionGrpcClient\eProsecutionGrpcClient.csproj", "{6B125C03-33D4-408E-BDC4-F016A8D50AE4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{9C9498BE-5EE0-4953-885C-1C900A290FBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eProsecutionGrpcClient", "eProsecutionGrpcClient\eProsecutionGrpcClient.csproj", "{6B125C03-33D4-408E-BDC4-F016A8D50AE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{6B125C03-33D4-408E-BDC4-F016A8D50AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B125C03-33D4-408E-BDC4-F016A8D50AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B125C03-33D4-408E-BDC4-F016A8D50AE4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C9498BE-5EE0-4953-885C-1C900A290FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C9498BE-5EE0-4953-885C-1C900A290FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C9498BE-5EE0-4953-885C-1C900A290FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C9498BE-5EE0-4953-885C-1C900A290FBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

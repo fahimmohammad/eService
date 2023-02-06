@@ -1,0 +1,21 @@
+syntax = "proto3";
+import "Protos/common.proto";
+option csharp_namespace = "eProsecutionGrpc";
+
+package prosecutor;
+
+service ProsecutorGrpc {
+  rpc ProsecutorLogin (ProsecutorLoginReq) returns (ProsecutorLoginReply);
+}
+message ProsecutorLoginReq {
+	string UserId = 1;
+	string Password =2;
+}
+message ProsecutorLoginReply {
+  string Id = 1;
+  string LoginName = 2;
+  string Name = 3;
+  string DivisionName = 4;
+  optional ExceptionReply ExceptionReply = 5;
+
+}
