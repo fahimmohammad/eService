@@ -11,11 +11,14 @@ message ProsecutorLoginReq {
 	string UserId = 1;
 	string Password =2;
 }
-message ProsecutorLoginReply {
+message Prosecutor{
   string Id = 1;
   string LoginName = 2;
   string Name = 3;
   string DivisionName = 4;
+}
+message ProsecutorLoginReply {
+  Prosecutor prosecutor = 1;
   optional ExceptionReply ExceptionReply = 5;
 
 }

@@ -21,11 +21,13 @@
     <Compile Remove="DAO\ICustomer.cs" />
     <Compile Remove="GrpcServices\CustomerService.cs" />
     <Compile Remove="GrpcServices\GreeterService.cs" />
+    <Compile Remove="Model\CaseProfile.cs" />
     <Compile Remove="Model\Customer.cs" />
     <Compile Remove="Repository\CustomerService.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Protos\caseprofile.proto" />
     <None Remove="Protos\common.proto" />
     <None Remove="Protos\customer.proto" />
     <None Remove="Protos\datalist.proto" />
@@ -48,11 +50,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="7.0.0" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="7.21.9" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\caseprofile.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\common.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\datalist.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\prosecutor.proto" GrpcServices="Server" />

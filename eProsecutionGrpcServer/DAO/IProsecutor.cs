@@ -1,7 +1,9 @@
-﻿namespace eProsecutionGrpcServer.DAO
+﻿using eProsecutionGrpc;
+
+namespace eProsecutionGrpcServer.DAO
 {
     public interface IProsecutor
     {
-        public Model.Prosecutor ProsecutroLogin(string id,string password);
+        public Prosecutor ProsecutroLogin(string id,string password);
     }
 }

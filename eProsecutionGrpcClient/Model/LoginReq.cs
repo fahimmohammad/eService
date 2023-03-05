@@ -1,6 +1,6 @@
 ﻿namespace eProsecutionGrpcClient.Model
 {
-    public class LogReq
+    public class LoginReq
     {
         public string userid { get; set; }
         public string password { get; set; }

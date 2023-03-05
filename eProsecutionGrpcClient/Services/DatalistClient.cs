@@ -35,6 +35,15 @@ namespace eProsecutionGrpcClient.Services
 
             return reply;
         }
+
+        public GetBrtaSeriesReply GetBrtaSeries()
+        {
+            var reply = client.GetBrtaSeries(new Empty
+            {
+            });
+
+            return reply;
+        }
         public GetSeizedDocumentReply GetSeizedDocument()
         {
             var reply = client.GetSeizedDocument(new Empty
@@ -43,7 +52,7 @@ namespace eProsecutionGrpcClient.Services
 
             return reply;
         }
-        public GetProsecutionCodeReply GetProsecutionCode(string userid)
+        public GetProsecutionCodeReply GetProsecutionCode(long userid)
         {
             var reply = client.GetProsecutionCode(new GetProsecutionCodeReq
             {

@@ -1,6 +1,13 @@
 eProsecutionGrpcServer/obj/
 eProsecutionGrpcServer/bin/
 eProsecutionGrpcServer/Migrations/
+eProsecutionGrpcServer/Properties/*
+eProsecutionGrpcServer/.config/*
+
+/Publish/
+.vs/*
 
 eProsecutionGrpcClient/obj/
 eProsecutionGrpcClient/bin/
+eProsecutionGrpcClient/Properties/*
+eProsecutionGrpcClient/.config/*

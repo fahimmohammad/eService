@@ -4,7 +4,6 @@ using eProsecutionGrpcServer;
 using Google.Protobuf.Collections;
 using Grpc.Core;
 using eProsecutionGrpc;
-using static eProsecutionGrpcServer.Model.Datalist;
 using BrtaOffice = eProsecutionGrpc.BrtaOffice;
 using Location = eProsecutionGrpc.Location;
 using SeizedDocument = eProsecutionGrpc.SeizedDocument;
@@ -28,14 +27,15 @@ namespace eProsecutionGrpcServer.GrpcServices
             var data = _datalist.GetProsecutionCode(req.Userid);
             if (data.Count > 0)
             {
-                var config = new MapperConfiguration(cfg =>
+                response.ProsecutionCode.AddRange(data);
+               /*var config = new MapperConfiguration(cfg =>
                          cfg.CreateMap<Model.Datalist.ProsecutionCode, ProsecutionCode>()
                      );
                 var mapper = new Mapper(config);
                 foreach (var prosecutionCode in data)
                 {
                     response.ProsecutionCode.Add((mapper.Map<ProsecutionCode>(prosecutionCode)));
-                }
+                }*/
             }
             else
             {
@@ -46,7 +46,7 @@ namespace eProsecutionGrpcServer.GrpcServices
             }
             return Task.FromResult(response);
         }
-       public override Task<GetSeizedDocumentReply> GetSeizedDocument(Empty req,ServerCallContext context) {
+        public override Task<GetSeizedDocumentReply> GetSeizedDocument(Empty req,ServerCallContext context) {
             GetSeizedDocumentReply response = new GetSeizedDocumentReply();
             var data = _datalist.GetSeizedDocument();
             if (data.Count > 0)
@@ -81,6 +81,27 @@ namespace eProsecutionGrpcServer.GrpcServices
                 foreach (var brtaOffice in data)
                 {
                     response.BrtaOffice.Add((mapper.Map<BrtaOffice>(brtaOffice)));
+                }
+            }
+            else
+            {
+                ExceptionReply excep = new ExceptionReply();
+                excep.Code = "204";
+                excep.Message = "No data found";
+                response.ExceptionReply = excep;
+            }
+            return Task.FromResult(response);
+        }
+
+        public override Task<GetBrtaSeriesReply> GetBrtaSeries(Empty req, ServerCallContext context)
+        {
+            GetBrtaSeriesReply response = new GetBrtaSeriesReply();
+            var data = _datalist.GetBrtaSeries();
+            if (data.Count > 0)
+            {
+                foreach (var brtaSeries in data)
+                {
+                    response.BrtaSeries.Add(brtaSeries);
                 }
             }
             else

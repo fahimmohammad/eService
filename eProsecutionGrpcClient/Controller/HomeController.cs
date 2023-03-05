@@ -4,6 +4,10 @@ using eProsecutionGrpcClient;
 using Microsoft.AspNetCore.Mvc;
 using Grpc.Core;
 using eProsecutionGrpc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace eProsecutionGrpcClient.Controller
 {
@@ -15,13 +19,8 @@ namespace eProsecutionGrpcClient.Controller
         public HomeController(IConfiguration iconfig) {
             _iconfig = iconfig;
         }
-       [HttpPost]
-        public ProsecutorLoginReply Login(LogReq req) {
-            ProsecutorClient pc = new ProsecutorClient(_iconfig);
-            return pc.ProsecutorLogin(req.userid, req.password);
-        }
-
-       [HttpGet]
+     
+       /* [HttpGet]
         public GetLocationReply GetLocation() {
             DatalistClient cs = new DatalistClient(_iconfig);
             return cs.GetLocation();
@@ -43,6 +42,6 @@ namespace eProsecutionGrpcClient.Controller
         {
             DatalistClient cs = new DatalistClient(_iconfig);
             return cs.GetProsecutionCode(userid);
-        }
+        }*/
     }
 }

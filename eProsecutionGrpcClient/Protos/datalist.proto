@@ -7,6 +7,7 @@ service DatalistGrpc {
   rpc GetLocation(Empty)returns(GetLocationReply);
   rpc GetSeizedDocument(Empty)returns(GetSeizedDocumentReply);
   rpc GetBrtaOffice(Empty)returns(GetBrtaOfficeReply);
+  rpc GetBrtaSeries(Empty)returns(GetBrtaSeriesReply);
   rpc GetProsecutionCode(GetProsecutionCodeReq)returns(GetProsecutionCodeReply);
 }
 message Location{
@@ -34,12 +35,23 @@ message GetBrtaOfficeReply{
 	repeated BrtaOffice brtaOffice=1;
 	optional ExceptionReply exceptionReply = 2;
 }
+message BrtaSeries{
+	string id = 1;
+	string name =2;
+}
+message GetBrtaSeriesReply{
+	repeated BrtaSeries brtaSeries=1;
+	optional ExceptionReply exceptionReply = 2;
+}
+
 message ProsecutionCode{
 	string id=1;
 	string code=2;
+	string cid = 3;
+	string comment = 4;
 }
 message GetProsecutionCodeReq{
-	string userid=1;
+	int64 userid=1;
 }
 message GetProsecutionCodeReply{
 	repeated ProsecutionCode prosecutionCode=1;

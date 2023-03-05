@@ -1,0 +1,53 @@
+syntax = "proto3";
+import "Protos/common.proto";
+option csharp_namespace = "eProsecutionGrpc";
+package caseprofile;
+service CaseProfileGrpc {
+  rpc CaseEntry(CaseProfileReq)returns(CaseProfileResponse);
+}
+
+message CaseProfileReq{
+	string vehicleNo = 1;
+	string brtaZoneId =2;
+	int32 seriesId =3;
+	string accusedPersonName =4;
+	string accusedPersonFather = 5;
+	string addressLine_1 = 6;
+	optional string addressLine_2 =7;
+	optional string mobileNumber = 8;
+	string caseLocation = 9;
+	string comments_1 =10;
+	string comments_2 = 11;
+	int64 prosecutorId = 12;
+	string dateOfOffense = 13;
+	int32 caseStatus = 14;
+	string seizedDocuments = 15;
+	repeated CaseProsecutions caseProsecutions =16;
+	string witness = 17;
+}
+message CaseProfile{
+	string prosecutorId = 1;
+	string caseId = 2;
+	string accusedPersonName =3;
+	string accusedPersonFather = 4;
+	string mobileNumber = 5;
+	string address =6;
+	string vehicleNo = 7;
+	repeated CaseProsecutions caseProsecutions =8;
+	string caseLocation = 9;
+	string seizedDocuments = 10;
+	string dateOfOffense = 11;
+	string lastDateofPayment = 12;
+	string witness = 13;
+	string amount =14;
+}
+
+message CaseProsecutions{
+string prosecution = 1;
+repeated string comment = 2;
+}
+
+message CaseProfileResponse{
+	CaseProfile caseProfile = 1;
+	optional ExceptionReply exceptionReply = 2;
+}

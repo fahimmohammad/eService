@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using static eProsecutionGrpcServer.Model.Datalist;
+﻿using eProsecutionGrpc;
+using Microsoft.EntityFrameworkCore;
 
 namespace eProsecutionGrpcServer.Model
 {
@@ -8,10 +8,6 @@ namespace eProsecutionGrpcServer.Model
         public ServerDbContext(DbContextOptions<ServerDbContext> options):base(options) { }
         //public DbSet<Customer> Customer { get; set; }
        public DbSet<Prosecutor> Prosecutor { get; set; }
-       /* public DbSet<Datalist.ProsecutionCode> ProsecutionCode { get; set; }
-        public DbSet<Datalist.SeizedDocument> SeizedDocument { get; set; }
-        public DbSet<Datalist.BrtaOffice> BrtaOffice { get; set; }*/
-        public DbSet<Datalist.Location> Location { get; set; }
     }
 
 

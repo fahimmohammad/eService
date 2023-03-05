@@ -1,7 +1,10 @@
-﻿using eProsecutionGrpcServer.DAO;
+﻿using eProsecutionGrpc;
+using eProsecutionGrpcServer.DAO;
+using Google.Protobuf.Collections;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Oracle.ManagedDataAccess.Client;
+using System.Collections.Generic;
 using System.Data;
 using System.Security.Policy;
 
@@ -15,10 +18,10 @@ namespace eProsecutionGrpcServer.Repository
             _dbContext = dbContext;
         }
 
-        public List<Datalist.BrtaOffice> GetBrtaOffice()
+        public RepeatedField<BrtaOffice> GetBrtaOffice()
         {
 
-            List<Datalist.BrtaOffice> data = new List<Datalist.BrtaOffice>();
+            RepeatedField<BrtaOffice> data = new RepeatedField<BrtaOffice>();
             var dt = new DataTable();
             var conn = _dbContext.Database.GetDbConnection();
             var connectionState = conn.State;
@@ -38,7 +41,9 @@ namespace eProsecutionGrpcServer.Repository
                         {
                             foreach (DataRow row in dt.Rows)
                             {
-                                var brtaOffice = new Datalist.BrtaOffice(id: row["id"].ToString(), code: row["code"].ToString());
+                                var brtaOffice = new BrtaOffice();
+                                brtaOffice.Id = row["id"].ToString();
+                                brtaOffice.Code = row["code"].ToString();
                                 data.Add(brtaOffice);
                             }
                         }
@@ -59,12 +64,56 @@ namespace eProsecutionGrpcServer.Repository
             return data;
         }
 
-
-        public List<Datalist.Location> GetLocation()
+        public RepeatedField<BrtaSeries> GetBrtaSeries()
         {
-            List<Datalist.Location> data = new List<Datalist.Location>();
+
+            RepeatedField<BrtaSeries> data = new RepeatedField<BrtaSeries>();
             var dt = new DataTable();
-            var conn =  _dbContext.Database.GetDbConnection();
+            var conn = _dbContext.Database.GetDbConnection();
+            var connectionState = conn.State;
+            try
+            {
+                if (connectionState != ConnectionState.Open) conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "GET_VRS_BRTA_VEHICLESERIES_TELPO";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    OracleParameter p4 = new OracleParameter("pRESULT_SET_OUT", OracleDbType.RefCursor, ParameterDirection.Output);
+                    cmd.Parameters.Add(p4);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        dt.Load(reader);
+                        if (dt.Rows.Count > 0)
+                        {
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                var brtaSeries = new BrtaSeries();
+                                brtaSeries.Id = row["id"].ToString();
+                                brtaSeries.Name = row["name"].ToString();
+                                data.Add(brtaSeries);
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // error handling
+                throw;
+            }
+            finally
+            {
+                if (connectionState != ConnectionState.Closed) conn.Close();
+            }
+
+            return data;
+        }
+        public RepeatedField<Location> GetLocation()
+        {
+            RepeatedField<Location> data = new RepeatedField<Location>();
+            var dt = new DataTable();
+            var conn = _dbContext.Database.GetDbConnection();
             var connectionState = conn.State;
             try
             {
@@ -78,14 +127,17 @@ namespace eProsecutionGrpcServer.Repository
                     using (var reader = cmd.ExecuteReader())
                     {
                         dt.Load(reader);
-                        if (dt.Rows.Count >0 ){
+                        if (dt.Rows.Count > 0)
+                        {
                             foreach (DataRow row in dt.Rows)
                             {
-                                var location = new Datalist.Location(id:row["id"].ToString(), locationName:row["location"].ToString());
+                                var location = new Location();
+                                location.Id = row["id"].ToString();
+                                location.LocationName = row["location"].ToString();
                                 data.Add(location);
                             }
                         }
-                        
+
                     }
                 }
             }
@@ -98,14 +150,13 @@ namespace eProsecutionGrpcServer.Repository
             {
                 if (connectionState != ConnectionState.Closed) conn.Close();
             }
-           
+
             return data;
         }
 
-        public List<Datalist.ProsecutionCode> GetProsecutionCode(string userid)
+        public RepeatedField<ProsecutionCode> GetProsecutionCode(long userid)
         {
-
-            List<Datalist.ProsecutionCode> data = new List<Datalist.ProsecutionCode>();
+            RepeatedField<ProsecutionCode> data = new RepeatedField<ProsecutionCode>();
             var dt = new DataTable();
             var conn = _dbContext.Database.GetDbConnection();
             var connectionState = conn.State;
@@ -114,13 +165,14 @@ namespace eProsecutionGrpcServer.Repository
                 if (connectionState != ConnectionState.Open) conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SQI_PROSECUTION_DOWNLOAD";
+                    cmd.CommandText = "SQI_PROSECUTION_DOWNLOAD_WIZ";
                     cmd.CommandType = CommandType.StoredProcedure;
-                    OracleParameter inParam = new OracleParameter("pUserId",OracleDbType.Int32, ParameterDirection.Input);
-                    inParam.Value = Int32.Parse(userid);
+                    OracleParameter inParam = new OracleParameter("pUserId", OracleDbType.Int64, ParameterDirection.Input);
+                    inParam.Value = userid;
                     cmd.Parameters.Add(inParam);
-                    OracleParameter outParam = new OracleParameter("pRESULT_SET_OUT", OracleDbType.RefCursor, ParameterDirection.Output);
-                    cmd.Parameters.Add(outParam);
+                    //cmd.Parameters.Add(new OracleParameter("pUserId", OracleDbType.Int64, ParameterDirection.Input).Value= userid);
+                    // OracleParameter outParam = new OracleParameter("pRESULT_SET_OUT", OracleDbType.RefCursor, ParameterDirection.Output);
+                    cmd.Parameters.Add(new OracleParameter("pRESULT_SET_OUT", OracleDbType.RefCursor, ParameterDirection.Output));
                     using (var reader = cmd.ExecuteReader())
                     {
                         dt.Load(reader);
@@ -128,11 +180,14 @@ namespace eProsecutionGrpcServer.Repository
                         {
                             foreach (DataRow row in dt.Rows)
                             {
-                                var prosecutionCode = new Datalist.ProsecutionCode(id: row["id"].ToString(), code: row["code"].ToString());
+                                var prosecutionCode = new ProsecutionCode();
+                                prosecutionCode.Id = row["id"].ToString();
+                                prosecutionCode.Code = row["code"].ToString();
+                                prosecutionCode.Cid = row["cid"].ToString();
+                                prosecutionCode.Comment = row["comments"].ToString();
                                 data.Add(prosecutionCode);
                             }
                         }
-
                     }
                 }
             }
@@ -149,10 +204,9 @@ namespace eProsecutionGrpcServer.Repository
             return data;
         }
 
-        public List<Datalist.SeizedDocument> GetSeizedDocument()
+        public RepeatedField<SeizedDocument> GetSeizedDocument()
         {
-
-            List<Datalist.SeizedDocument> data = new List<Datalist.SeizedDocument>();
+            RepeatedField<SeizedDocument> data = new RepeatedField<SeizedDocument>();
             var dt = new DataTable();
             var conn = _dbContext.Database.GetDbConnection();
             var connectionState = conn.State;
@@ -172,7 +226,9 @@ namespace eProsecutionGrpcServer.Repository
                         {
                             foreach (DataRow row in dt.Rows)
                             {
-                                var seizedDocument = new Datalist.SeizedDocument(id: row["id"].ToString(), shortName: row["shortname"].ToString());
+                                var seizedDocument = new SeizedDocument();
+                                seizedDocument.Id = row["id"].ToString();
+                                seizedDocument.Shortname = row["shortname"].ToString();
                                 data.Add(seizedDocument);
                             }
                         }
@@ -193,6 +249,5 @@ namespace eProsecutionGrpcServer.Repository
             return data;
         }
 
-     
     }
 }

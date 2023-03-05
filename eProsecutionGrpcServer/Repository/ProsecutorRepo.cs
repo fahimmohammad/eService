@@ -1,5 +1,5 @@
-﻿using eProsecutionGrpcServer.DAO;
-using eProsecutionGrpcServer.Model;
+﻿using eProsecutionGrpc;
+using eProsecutionGrpcServer.DAO;
 using eTPS.Utilities.EncryptionEngine;
 using Microsoft.EntityFrameworkCore;
 

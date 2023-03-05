@@ -21,28 +21,26 @@ namespace eProsecutionGrpcServer.GrpcServices
 
         public override Task<ProsecutorLoginReply> ProsecutorLogin(ProsecutorLoginReq req, ServerCallContext context)
         {
-           // var k = _datalist.GetLocation();
-            var config = new MapperConfiguration(cfg =>
-                    cfg.CreateMap<Model.Prosecutor, ProsecutorLoginReply>()
-                );
-            var mapper = new Mapper(config);
+          
             var data = _prosecutor.ProsecutroLogin(req.UserId,req.Password);
             ProsecutorLoginReply response = new ProsecutorLoginReply();
             if (data != null)
             {
-                response = (mapper.Map<ProsecutorLoginReply>(data));
+                response.Prosecutor = data;
                 return Task.FromResult(response);
             }
             else {
-                response.Id = req.UserId;
-                response.LoginName = "";
-                response.DivisionName = "";
-                response.Name = "";
-                response.Id = req.UserId;
-                //ExceptionReply exceptionReply = new ExceptionReply();
-               // exceptionReply.Code = "200";
-               // exceptionReply.Message = "User Name Password didn't matched";
-               // response.ExceptionReply = exceptionReply;
+                Prosecutor prosecutor = new Prosecutor();
+                prosecutor.Id = req.UserId;
+                prosecutor.LoginName = "";
+                prosecutor.DivisionName = "";
+                prosecutor.Name = "";
+                prosecutor.Id = req.UserId;
+                response.Prosecutor = prosecutor;
+                ExceptionReply exceptionReply = new ExceptionReply();
+                exceptionReply.Code = "204";
+                exceptionReply.Message = "User Name Password didn't matched";
+                response.ExceptionReply = exceptionReply;
 
                /* response.ExceptionReply.Code = "200";
                 response.ExceptionReply.Message = "User Name Password didn't matched";*/

@@ -1,12 +1,14 @@
-﻿using static eProsecutionGrpcServer.Model.Datalist;
+﻿using eProsecutionGrpc;
+using Google.Protobuf.Collections;
 
 namespace eProsecutionGrpcServer.DAO
 {
     public interface IDatalist
     {
-        public List<Datalist.ProsecutionCode> GetProsecutionCode(string userid);
-        public List<Datalist.SeizedDocument> GetSeizedDocument();
-        public List<Datalist.BrtaOffice> GetBrtaOffice();
-        public List<Datalist.Location> GetLocation();
+        public RepeatedField<ProsecutionCode> GetProsecutionCode(long userid);
+        public RepeatedField<SeizedDocument> GetSeizedDocument();
+        public RepeatedField<BrtaOffice> GetBrtaOffice();
+        public RepeatedField<BrtaSeries> GetBrtaSeries();
+        public RepeatedField<Location> GetLocation();
     }
 }
